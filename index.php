@@ -105,16 +105,17 @@
       </div>
 
       <?php
-      $max_error = $min_error = 1;
-      $max       = $min       = 1;
+    //  $max_error = $min_error = 1;
+    //  $max       = $min       = 1;
 
       $numbers = range(1, 20);
       shuffle($numbers);
 
-      function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
-        $numbers = range($min, $max);
-        shuffle($numbers);
-        return array($numbers, 0, $quantity);
+      function UniqueRandomNumbersWithinRange($min, $max, $quantity)
+      {
+          $numbers = range($min, $max);
+          shuffle($numbers);
+          return array_slice($numbers, 0, $quantity);
       }
 
       ?>
@@ -150,8 +151,11 @@
       </button>
 
             <?php
-      echo "<h2>Random Limits:</h2>";
-      print_r(UniqueRandomNumbersWithinRange(0, 25, 16));
+               echo "<h2>Random Limits:</h2>";
+               $result= UniqueRandomNumbersWithinRange(0, 25, 16);
+                echo '<pre>';
+               print_r($result);
+                echo '</pre>';
       ?>
       </form>
         </div>
