@@ -105,7 +105,93 @@
       </div>
 
 
-      <div class="section" id="passport">
+<!--
+**********************************************************************
+*  Begin Random Form
+**********************************************************************
+-->
+<?php
+// define variables and set to empty values
+$Upper_randErr = $Lower_randErr = "";
+$Upper_rand    = $Lower_rand    = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	if (empty($_POST["Upper_rand"])) {
+		$Upper_randErr = "An Upper Limit is required";
+	} else {
+		$Upper_rand = test_input($_POST["Upper_rand"]);
+		// check if Upper_rand only contains letters and whitespace
+		if (!preg_match("/^[1-9][0-9]*$/", $Upper_rand)) {
+			$Upper_randErr = "Only Numerical Values Please";
+		}
+	}
+
+	if (empty($_POST["Lower_rand"])) {
+		$Lower_randErr = "Lower_rand is required";
+	} else {
+		$Lower_rand = test_input($_POST["Lower_rand"]);
+		// check if Lower_rand only contains letters and whitespace
+		if (!preg_match("/^[1-9][0-9]*$/", $Lower_rand)) {
+			$Lower_randErr = "Only Numerical Values Please";
+		}
+	}
+}
+
+function test_input($data) {
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+?>
+
+<div class="container center-align">
+
+<h2>Random Node Generator</h2>
+<p>
+<!--span class="error">* required field</span-->
+</p>
+
+<div class="row">
+
+<form class="col s12" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
+<div class="row">
+<div class="input-field col s6">
+<input placeholder="Placeholder" type="text" class="validate" name="Upper_rand" value="<?php echo $Upper_rand;?>">
+<label for="Upper_rand"> Upper Random Limit:</label>
+<!--span class="error">* <?php echo $Upper_randErr;?></span-->
+</div>
+
+
+<div class="input-field col s6">
+<input id="Lower_rand" placeholder="Placeholder" type="text" class="validate" name="Lower_rand" value="<?php echo $Lower_rand;?>">
+<label for="Lower_rand"> Upper Random Limit:</label>
+<!-- span class="error">* <?php echo $Lower_randErr;?></span-->
+</div>
+</div>
+
+
+  <input type="submit" name="submit" value="Submit">
+<?php
+echo "<h2>Random Limits:</h2>";
+echo rand($Lower_rand, $Upper_rand);
+echo "<br>";
+echo "<br>";
+?>
+</form>
+  </div>
+  </div>
+
+
+<!--
+**********************************************************************
+*  End Random Form
+**********************************************************************
+-->
+
+
+<div class="section" id="passport">
        <div class="row">
     <div class="col s12">
       <div class="card light-blue lighten-3" style="max-width:75%; margin:0 auto;">
@@ -126,9 +212,15 @@
 
 
 
+
+
+
 <script type="text/javascript">
-
-
+/**
+**********************************************************************
+*  Begin Declaring Tree Function
+**********************************************************************
+**/
 $(function () {
       $(window).resize(function () {
         var h = Math.max($(window).height() - 0, 420);
@@ -160,8 +252,12 @@ $(function () {
               var tmp = $.jstree.defaults.contextmenu.items();
               delete tmp.create.action;
               tmp.create.label = "New";
-
-              // 'create folder' context menu, which allows right click option
+/**
+**********************************************************************
+*  Add Factory
+**********************************************************************
+**/
+             // 'create folder' context menu, which allows right click option
               tmp.create.submenu = {
                 "create_folder" : {
                   "separator_after" : true,
@@ -174,7 +270,11 @@ $(function () {
                     });
                   }
                 },
-
+/**
+**********************************************************************
+*  Add Child Node
+**********************************************************************
+**/
                 // 'create file' context menu, which allows right click option
                 "create_file" : {
                   "label"       : "Generate Random Numbers",
@@ -211,7 +311,7 @@ $(function () {
             .fail(function () {
               data.instance.refresh();
             });
-        })
+        }) // We have just deleted a node
         .on('create_node.jstree', function (e, data) {
           $.get('?operation=create_node', { 'type' : data.node.type, 'id' : data.node.parent, 'text' : data.node.text })
             .done(function (d) {
@@ -220,7 +320,7 @@ $(function () {
             .fail(function () {
               data.instance.refresh();
             });
-        })
+        }) // We have just created a node
         .on('rename_node.jstree', function (e, data) {
           $.get('?operation=rename_node', { 'id' : data.node.id, 'text' : data.text })
             .done(function (d) {
@@ -229,7 +329,7 @@ $(function () {
             .fail(function () {
               data.instance.refresh();
             });
-        })
+        }) // We have just renamed a node
         .on('move_node.jstree', function (e, data) {
           $.get('?operation=move_node', { 'id' : data.node.id, 'parent' : data.parent })
             .done(function (d) {
@@ -239,7 +339,7 @@ $(function () {
             .fail(function () {
               data.instance.refresh();
             });
-        })
+        }) // We have just moved a node
         .on('copy_node.jstree', function (e, data) {
           $.get('?operation=copy_node', { 'id' : data.original.id, 'parent' : data.parent })
             .done(function (d) {
@@ -249,7 +349,7 @@ $(function () {
             .fail(function () {
               data.instance.refresh();
             });
-        })
+        }) // We have just copied a node
         .on('changed.jstree', function (e, data) {
           if(data && data.selected && data.selected.length) {
             $.get('?operation=get_content&id=' + data.selected.join(':'), function (d) {
@@ -313,9 +413,17 @@ $(function () {
 *       sel = ref.create_node(sel, { "type": "file" }); => create node as a file type
 *
 *
+*
+*
+*
+* rand(min,max);
+*
+*
+*
+*
 **/
 
-// create function for onClick event
+// Add Factory Node OnClick
 function demo_create() {
       var ref = $('#tree-container').jstree(true),
       sel = ref.get_selected();
@@ -327,17 +435,50 @@ function demo_create() {
       }
 };
 
+
+
 // rand function for onClick event
 function demo_rand() {
+
+$("")
+
+
+  // referenced value is the tree container => true
       var ref = $('#tree-container').jstree(true),
+      // please select that value
       sel = ref.get_selected();
+      // else please return false
       if (!sel.length) { return false; }
+      // otherwise, please initialize the node array
       sel = sel[0];
+     // for that selected value, please create a child node
       sel = ref.create_node(sel, { "type": "file" });
+
+
       if (sel) {
         ref.edit(sel);
       }
 };
+
+
+
+
+
+
+
+
+/**
+function gen_ran_node(){
+  var upper = document.getElementById("rand_upper").value;
+  var lower = document.getElementById("rand_lower").value;
+// lets validate?
+
+if()
+
+}
+
+**/
+
 
 
 // rename function for onClick event
