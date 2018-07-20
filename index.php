@@ -1,5 +1,5 @@
 <!-- reference web page header -->
-<?php require ("view/header.php");?>
+<?php require("view/header.php");?>
 <body>
   <nav class="light-blue lighten-1" role="navigation">
       <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Passport Challenge</a>
@@ -56,7 +56,7 @@
         <div class="col s12 m4">
           <!-- create node section-->
           <div class="icon-block z-depth-2" style="padding:10px; position-relative;">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+            <h2 class="center light-blue-text"><i class="material-icons">build</i></h2>
             <h5 class="center">Add Tree Nodes</h5>
             <p class="light">You can right click directly on a parent node to add a child node</p>
             <div class="row center">
@@ -72,7 +72,7 @@
         <!-- delete node section-->
         <div class="col s12 m4">
           <div class="icon-block z-depth-2" style="padding:10px; position:relative;">
-            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <h2 class="center light-blue-text"><i class="material-icons">cancel_presentation</i></h2>
             <h5 class="center">Delete Tree Nodes</h5>
 
             <p class="light">By utilizing ajax we are able to right click on nodes and make them disappear</p>
@@ -89,7 +89,7 @@
         <!-- rename node section-->
         <div class="col s12 m4">
           <div class="icon-block z-depth-2" style="padding:10px; position:relative;">
-            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
+            <h2 class="center light-blue-text"><i class="material-icons">sync</i></h2>
             <h5 class="center">Rename Tree Nodes</h5>
             <p class="light">Another Option available to us is right clicking on a node and renaming its title</p>
             <div class="row center">
@@ -104,100 +104,128 @@
       </div>
       </div>
 
+      <?php
+      $max_error = $min_error = 1;
+      $max       = $min       = 1;
 
-<!--
-**********************************************************************
-*  Begin Random Form
-**********************************************************************
--->
-<?php
-// define variables and set to empty values
-$Upper_randErr = $Lower_randErr = "";
-$Upper_rand    = $Lower_rand    = "";
+      $numbers = range(1, 20);
+      shuffle($numbers);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if (empty($_POST["Upper_rand"])) {
-		$Upper_randErr = "An Upper Limit is required";
-	} else {
-		$Upper_rand = test_input($_POST["Upper_rand"]);
-		// check if Upper_rand only contains letters and whitespace
-		if (!preg_match("/^[1-9][0-9]*$/", $Upper_rand)) {
-			$Upper_randErr = "Only Numerical Values Please";
-		}
-	}
+      function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
+        $numbers = range($min, $max);
+        shuffle($numbers);
+        return array($numbers, 0, $quantity);
+      }
 
-	if (empty($_POST["Lower_rand"])) {
-		$Lower_randErr = "Lower_rand is required";
-	} else {
-		$Lower_rand = test_input($_POST["Lower_rand"]);
-		// check if Lower_rand only contains letters and whitespace
-		if (!preg_match("/^[1-9][0-9]*$/", $Lower_rand)) {
-			$Lower_randErr = "Only Numerical Values Please";
-		}
-	}
-}
+      ?>
 
-function test_input($data) {
-	$data = trim($data);
-	$data = stripslashes($data);
-	$data = htmlspecialchars($data);
-	return $data;
-}
-?>
+      <div class="container center-align">
 
-<div class="container center-align">
+      <h2>Random Node Generator</h2>
+      <p>
+      <!--span class="error">* required field</span-->
+      </p>
 
-<h2>Random Node Generator</h2>
-<p>
-<!--span class="error">* required field</span-->
-</p>
+      <div class="row">
 
-<div class="row">
+      <form class="col s12" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
-<form class="col s12" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-
-<div class="row">
-<div class="input-field col s6">
-<input placeholder="Placeholder" type="text" class="validate" name="Upper_rand" value="<?php echo $Upper_rand;?>">
-<label for="Upper_rand"> Upper Random Limit:</label>
-<!--span class="error">* <?php echo $Upper_randErr;?></span-->
-</div>
+      <div class="row">
+      <div class="input-field col s6">
+      <input id="min" placeholder="Placeholder" type="text" class="validate" name="min" value="<?php echo $min;?>">
+      <label for="min"> Lower Limit:</label>
+      </div>
 
 
-<div class="input-field col s6">
-<input id="Lower_rand" placeholder="Placeholder" type="text" class="validate" name="Lower_rand" value="<?php echo $Lower_rand;?>">
-<label for="Lower_rand"> Upper Random Limit:</label>
-<!-- span class="error">* <?php echo $Lower_randErr;?></span-->
-</div>
-</div>
+      <div class="input-field col s6">
+      <input id="max" placeholder="Placeholder" type="text" class="validate" name="max" value="<?php echo $max;?>">
+      <label for="max"> Upper Limit:</label>
+      </div>
+      </div>
 
 
-  <input type="submit" name="submit" value="Submit">
-<?php
-echo "<h2>Random Limits:</h2>";
-echo rand($Lower_rand, $Upper_rand);
-echo "<br>";
-echo "<br>";
-?>
-</form>
+
+      <button class="btn blue accent-3 waves-effect waves-light" type="submit" name="action">Submit
+        <i class="material-icons right">send</i>
+      </button>
+
+            <?php
+      echo "<h2>Random Limits:</h2>";
+      print_r(UniqueRandomNumbersWithinRange(0, 25, 16));
+      ?>
+      </form>
+        </div>
+        </div>
+
+
+
+
+
+
+
+  <!--
+  ********************************************************************************************************************************************
+  *  toolkit helper
+  ********************************************************************************************************************************************
+  -->
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <!-- Modal Structure 1-->
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <h4>Right Click</h4>
+            <p><i class="material-icons">highlight</i>Tip: You can also right click on a factory node, to create, delete, or rename child nodes  </p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Got it!</a>
+          </div>
+        </div>
+
+
+        <!-- Modal Structure 2 -->
+          <div id="modal2" class="modal">
+            <div class="modal-content">
+              <h4>Button Issues?</h4>
+              <p><i class="material-icons">highlight</i> Tip: Remember, to create a new node using the button click command, you must highlight the factory node you wish to add children node to.
+              Then you can proceed with adding children to that factory node. </p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Easy!</a>
+            </div>
+          </div>
+
+          <!-- Modal Structure 3 -->
+            <div id="modal3" class="modal">
+              <div class="modal-content">
+                <h4>Dont Sweat it</h4>
+                <p><i class="material-icons">rowing</i> Tip: You're doing a great job!   </p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Awesome!</a>
+              </div>
+            </div>
+
+      <li><a data-target="modal1" class="btn-floating blue modal-trigger"><i class="material-icons">mouse</i></a></li>
+      <li><a data-target="modal2" class="btn-floating yellow darken-1 modal-trigger"><i class="material-icons">format_quote</i></a></li>
+      <li><a data-target="modal3" class="btn-floating green modal-trigger"><i class="material-icons">home</i></a></li>
+
+    </ul>
   </div>
-  </div>
-
-
 <!--
-**********************************************************************
+********************************************************************************************************************************************
 *  End Random Form
-**********************************************************************
+********************************************************************************************************************************************
 -->
-
-
 <div class="section" id="passport">
        <div class="row">
     <div class="col s12">
       <div class="card light-blue lighten-3" style="max-width:75%; margin:0 auto;">
         <div class="card-content white-text">
           <span class="card-title center-align"><h3>Responsive Tree</h3></span>
-                <div id="tree-container" style="max-width: 50%; margin:0 auto;"></div>
+          <div class="container center-align"><div id="tree-container" style="max-width: 50%; margin:0 auto;"></div></div>
   </div>
    </div>
    <div id="log"></div>
@@ -208,18 +236,18 @@ echo "<br>";
 <br>
 <br>
 
-<!--************************** end  **************************-->
-
-
-
-
+<!--
+********************************************************************************************************************************************
+*  break
+********************************************************************************************************************************************
+-->
 
 
 <script type="text/javascript">
 /**
-**********************************************************************
+********************************************************************************************************************************************
 *  Begin Declaring Tree Function
-**********************************************************************
+********************************************************************************************************************************************
 **/
 $(function () {
       $(window).resize(function () {
@@ -440,9 +468,6 @@ function demo_create() {
 // rand function for onClick event
 function demo_rand() {
 
-$("")
-
-
   // referenced value is the tree container => true
       var ref = $('#tree-container').jstree(true),
       // please select that value
@@ -462,25 +487,6 @@ $("")
 
 
 
-
-
-
-
-
-/**
-function gen_ran_node(){
-  var upper = document.getElementById("rand_upper").value;
-  var lower = document.getElementById("rand_lower").value;
-// lets validate?
-
-if()
-
-}
-
-**/
-
-
-
 // rename function for onClick event
 function demo_rename() {
       var ref = $('#tree-container').jstree(true),
@@ -497,9 +503,20 @@ function demo_delete() {
     if (!sel.length) { return false; }
     ref.delete_node(sel);
 };
+
+  // float button jQuery
+
+  $(document).ready(function(){
+    $('.fixed-action-btn').floatingActionButton();
+  });
+
+// modal
+  $(document).ready(function(){
+      $('.modal').modal();
+    });
     </script>
   </body>
 
 
 <!-- reference web page footer -->
-<?php require ("view/footer.php");?>
+<?php require("view/footer.php");?>

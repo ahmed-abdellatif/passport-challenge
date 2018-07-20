@@ -1,5 +1,4 @@
-
-  <footer class="page-footer orange">
+<footer class="page-footer orange">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
@@ -17,12 +16,11 @@
           </ul>
         </div>
         <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
+          <h5 class="white-text">Passport Tree Challenge</h5>
           <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
+            <li><a class="white-text" href="#!">Create</a></li>
+            <li><a class="white-text" href="#!">Delete</a></li>
+            <li><a class="white-text" href="#!">Rename</a></li>
           </ul>
         </div>
       </div>
