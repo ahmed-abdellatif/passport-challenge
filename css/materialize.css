@@ -1660,6 +1660,8 @@
   color: #ff9800 !important;
 }
 
+
+
 .orange.lighten-5 {
   background-color: #fff3e0 !important;
 }
@@ -2171,6 +2173,7 @@ html {
 
 body {
   margin: 0;
+  font-size: 13px;
   -webkit-text-size-adjust: 100%;
   -webkit-overflow-scrolling: touch;
   -webkit-font-smoothing: antialiased !important;
@@ -2182,6 +2185,9 @@ body {
 
 article, aside, footer, header, nav, section {
   display: block;
+  -webkit-text-size-adjust: 100%;
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 /**
@@ -2192,6 +2198,9 @@ article, aside, footer, header, nav, section {
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
+  -webkit-text-size-adjust: 100%;
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 /* Grouping content
@@ -2254,6 +2263,12 @@ a {
   background-color: transparent;
   /* 1 */
   -webkit-text-decoration-skip: objects;
+  font-size: 15px;
+  line-height: 200%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased !important;
+  font-weight: bold;
   /* 2 */
 }
 
@@ -4330,13 +4345,17 @@ nav .nav-wrapper {
 
 @media only screen and (min-width: 993px) {
   nav a.sidenav-trigger {
-    display: none;
+    float: left;
+    position: fixed;
+    z-index: 1;
+    height: 56px;
+    margin: 0 18px;
   }
 }
 
 nav .sidenav-trigger {
   float: left;
-  position: relative;
+  position: fixed;
   z-index: 1;
   height: 56px;
   margin: 0 18px;
@@ -4348,7 +4367,8 @@ nav .sidenav-trigger i {
 }
 
 nav .brand-logo {
-  position: absolute;
+  position: relative;
+  top:-3px;
   color: #fff;
   display: inline-block;
   font-size: 2.1rem;
@@ -4481,7 +4501,7 @@ nav .input-field label.active i {
 .navbar-fixed {
   position: relative;
   height: 56px;
-  z-index: 997;
+  z-index: 9999;
 }
 
 .navbar-fixed nav {
@@ -4507,13 +4527,12 @@ a {
 
 html {
   line-height: 1.5;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.87);
   -webkit-text-size-adjust: 100%;
   -webkit-overflow-scrolling: touch;
   -webkit-font-smoothing: antialiased !important;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
 
 }
 

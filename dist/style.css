@@ -1,4 +1,5 @@
 /* Custom Stylesheet */
+
 /**
  * Use this file to override Materialize files so you can update
  * the core Materialize files in the future
@@ -9,6 +10,18 @@
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
-	font-size: inherit;
+  font-size: inherit;
+}
+
+.jstree-default-small .jstree-anchor {
+  font-size: 25px;
+  line-height: 200%;
+
+}
+
+body {
+font-size: 30px;
+font-weight: bold;
 }

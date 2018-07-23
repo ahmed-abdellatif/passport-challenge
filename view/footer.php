@@ -1,4 +1,9 @@
-<footer class="page-footer orange">
+</div>
+</div>
+
+<br>
+<br>
+<footer class="page-footer" style="background:rgba(29,233,182,.7) !important;">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
